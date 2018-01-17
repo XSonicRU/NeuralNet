@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class Neuron {
     private double curval = 0;
-    private ArrayList<Connection> connections;
+    private ArrayList<Connection> connections = new ArrayList<>();
 
     void recieve(double val) {
         curval += val;

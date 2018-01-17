@@ -11,7 +11,9 @@ public class Network {
             System.out.println("ERROR!");
             System.exit(0);
         }
-
+        neurs1 = new Neuron[inpn];
+        neurs2 = new Neuron[hiddn];
+        neurs3 = new Neuron[outn];
         for (int i = 0; i < inpn; i++) {
             neurs1[i] = new Neuron();
         }
