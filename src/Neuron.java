@@ -13,8 +13,13 @@ class Neuron {
     }
 
     void sendvalue() {
+        double valtosend = 1 / (1 + Math.exp(-curval));
         for (Connection c : connections) {
             c.to.recieve(curval * c.w);
         }
+    }
+
+    double getCurval() {
+        return curval;
     }
 }

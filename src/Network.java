@@ -1,3 +1,4 @@
+import java.io.File;
 import java.util.Random;
 
 public class Network {
@@ -11,31 +12,49 @@ public class Network {
             System.exit(0);
         }
 
-
         for (int i = 0; i < inpn; i++) {
             neurs1[i] = new Neuron();
         }
         for (int i = 0; i < hiddn; i++) {
             neurs2[i] = new Neuron();
         }
-        for (int i = 0; i < neurs1.length; i++) {
-            for (int j = 0; j < neurs2.length; j++) {
-                neurs1[i].addConnection(new Connection(neurs2[j], new Random().nextDouble()));
+        for (int i = 0; i < outn; i++) {
+            neurs3[i] = new Neuron();
+        }
+        for (Neuron aNeurs1 : neurs1) {
+            for (Neuron aNeurs2 : neurs2) {
+                aNeurs1.addConnection(new Connection(aNeurs2, new Random().nextDouble()));
             }
         }
-        for (Neuron n : neurs2) {
-            n.sendvalue();
+        for (Neuron aNeurs2 : neurs2) {
+            for (Neuron aNeurs3 : neurs3) {
+                aNeurs2.addConnection(new Connection(aNeurs3, new Random().nextDouble()));
+            }
         }
 
     }
 
-    double procceddata(double[] data) {
+    Network(File f) { //In future updates
+
+    }
+
+    double[] procceddata(double[] data) {
+        double[] databack = new double[neurs3.length];
+        for (int i = 0; i < data.length; i++) { //normalizing values
+            while (data[i] > 1 || data[i] < -1) {
+                data[i] = data[i] / 10;
+            }
+        }
         for (int i = 0; i < neurs1.length; i++) {
             neurs1[i].recieve(data[i]);
             neurs1[i].sendvalue();
         }
-
-
-        return 0; //TODO
+        for (int i = 0; i < neurs2.length; i++) {
+            neurs2[i].sendvalue();
+        }
+        for (int i = 0; i < neurs3.length; i++) {
+            databack[i] = neurs3[i].getCurval();
+        }
+        return databack;
     }
 }
